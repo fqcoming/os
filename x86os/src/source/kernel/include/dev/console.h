@@ -1,11 +1,7 @@
-/**
- * 终端显示部件
- *
- * 作者：李述铜
- * 联系邮箱: 527676163@qq.com
- * 
- * 只支持VGA模式
- */
+
+// 终端显示部件 只支持VGA模式
+
+
 #ifndef CONSOLE_H
 #define CONSOLE_H
 

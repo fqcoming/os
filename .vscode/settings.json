@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "cpu_instr.h": "c",
+        "dev.h": "c",
+        "klib.h": "c",
+        "kbd.h": "c",
+        "file.h": "c",
+        "stat.h": "c",
+        "sem.h": "c",
+        "types.h": "c",
+        "list.h": "c",
+        "mutex.h": "c",
+        "stdlib.h": "c"
+    }
+}

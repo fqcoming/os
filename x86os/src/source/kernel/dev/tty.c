@@ -1,10 +1,6 @@
-/**
- * 终端tty
- * 目前只考虑处理cooked模式的处理
- *
- * 作者：李述铜
- * 联系邮箱: 527676163@qq.com
- */
+
+// 目前只考虑处理cooked模式的处理
+
 #include "dev/tty.h"
 #include "dev/console.h"
 #include "dev/kbd.h"

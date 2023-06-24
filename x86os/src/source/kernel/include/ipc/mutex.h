@@ -1,9 +1,4 @@
-/**
- * 互斥锁
- *
- * 作者：李述铜
- * 联系邮箱: 527676163@qq.com
- */
+
 #ifndef MUTEX_H
 #define MUTEX_H
 

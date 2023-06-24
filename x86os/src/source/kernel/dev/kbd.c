@@ -1,9 +1,4 @@
-/**
- * 键盘设备处理
- *
- * 作者：李述铜
- * 联系邮箱: 527676163@qq.com
- */
+
 #include "comm/cpu_instr.h"
 #include "cpu/irq.h"
 #include "dev/kbd.h"

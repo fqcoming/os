@@ -1,10 +1,6 @@
-/**
- * 贪吃蛇游戏
- *
- * 创建时间：2022年8月5日
- * 作者：李述铜
- * 联系邮箱: 527676163@qq.com
- */
+
+// 贪吃蛇游戏
+
 #include "main.h"
 #include "applib/lib_syscall.h"
 #include <stdlib.h>

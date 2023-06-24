@@ -1,9 +1,4 @@
-/**
- * 文件管理
- *
- * 作者：李述铜
- * 联系邮箱: 527676163@qq.com
- */
+
 #ifndef PFILE_H
 #define PFILE_H
 

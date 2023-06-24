@@ -1,9 +1,4 @@
-/**
- * 系统调用实现
- *
- * 作者：李述铜
- * 联系邮箱: 527676163@qq.com
- */
+
 #ifndef OS_SYSCALL_H
 #define OS_SYSCALL_H
 

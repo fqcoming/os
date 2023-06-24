@@ -1,9 +1,4 @@
-/**
- * 简单的链表
- *
- * 作者：李述铜
- * 联系邮箱: 527676163@qq.com
- */
+
 #ifndef LIST_H
 #define LIST_H
 

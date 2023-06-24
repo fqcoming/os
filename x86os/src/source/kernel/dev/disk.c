@@ -1,11 +1,4 @@
-/**
- * 磁盘驱动
- * 磁盘依次从sda,sdb,sdc开始编号，分区则从0开始递增
- * 其中0对应的分区信息为整个磁盘的信息
- *
- * 作者：李述铜
- * 联系邮箱: 527676163@qq.com
- */
+
 #include "dev/disk.h"
 #include "dev/dev.h"
 #include "tools/klib.h"

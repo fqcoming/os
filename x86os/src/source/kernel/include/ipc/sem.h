@@ -1,9 +1,4 @@
-/**
- * 计数信号量
- *
- * 作者：李述铜
- * 联系邮箱: 527676163@qq.com
- */
+
 #ifndef OS_SEM_H
 #define OS_SEM_H
 

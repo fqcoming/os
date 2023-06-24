@@ -1,9 +1,4 @@
-/**
- * 内存管理
- *
- * 作者：李述铜
- * 联系邮箱: 527676163@qq.com
- */
+
 #ifndef MEMORY_H
 #define MEMORY_H
 

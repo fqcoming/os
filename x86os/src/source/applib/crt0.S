@@ -1,9 +1,4 @@
-/**
- * 进程启动汇编部分代码
- *
- * 作者：李述铜
- * 联系邮箱: 527676163@qq.com
- */
+
      .text
     .global _start
     .extern cstart

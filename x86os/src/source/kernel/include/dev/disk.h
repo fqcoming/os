@@ -1,9 +1,4 @@
-/**
- * 磁盘驱动
- *
- * 作者：李述铜
- * 联系邮箱: 527676163@qq.com
- */
+
 #ifndef DISK_H
 #define DISK_H
 

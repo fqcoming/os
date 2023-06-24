@@ -1,9 +1,4 @@
-/**
- * 位图数据结构
- *
- * 作者：李述铜
- * 联系邮箱: 527676163@qq.com
- */
+
 #ifndef BITMAP_H
 #define BITMAP_H
 

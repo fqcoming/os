@@ -1,10 +1,4 @@
-/**
- * 终端显示部件
- *
- * 作者：李述铜
- * 联系邮箱: 527676163@qq.com
- * 参考资料：https://wiki.osdev.org/Printing_To_Screen
- */
+
 #include "dev/console.h"
 #include "tools/klib.h"
 #include "comm/cpu_instr.h"

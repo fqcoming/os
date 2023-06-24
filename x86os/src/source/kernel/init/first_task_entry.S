@@ -1,4 +1,8 @@
- 	.text
+ 	
+    
+    
+    
+    .text
  	.global first_task_entry
 	.extern first_task_main
 first_task_entry:

@@ -1,9 +1,4 @@
-﻿/**
- * 系统启动信息
- *
- * 作者：李述铜
- * 联系邮箱: 527676163@qq.com
- */
+﻿
 #ifndef BOOT_INFO_H
 #define BOOT_INFO_H
 

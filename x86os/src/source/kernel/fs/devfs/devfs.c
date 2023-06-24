@@ -1,10 +1,4 @@
-/**
- * 设备文件系统描述
- *
- * 创建时间：2022年8月5日
- * 作者：李述铜
- * 联系邮箱: 527676163@qq.com
- */
+
 #include "dev/dev.h"
 #include "fs/devfs/devfs.h"
 #include "fs/fs.h"

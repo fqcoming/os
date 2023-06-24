@@ -1,9 +1,4 @@
-﻿/**
- * CPU设置
- *
- * 作者：李述铜
- * 联系邮箱: 527676163@qq.com
- */
+﻿
 #include "comm/cpu_instr.h"
 #include "cpu/cpu.h"
 #include "cpu/irq.h"

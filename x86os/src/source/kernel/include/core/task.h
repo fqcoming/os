@@ -1,9 +1,4 @@
-/**
- * 任务实现
- *
- * 作者：李述铜
- * 联系邮箱: 527676163@qq.com
- */
+
 #ifndef TASK_H
 #define TASK_H
 
