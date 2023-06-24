@@ -1,0 +1,31 @@
+source/init/CMakeFiles/init.dir/main.c.obj: \
+ D:/VisualStudioProjects/guanfang/diy-x86os-master/start/test/source/init/main.c \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\stdio.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\_ansi.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\newlib.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\_newlib_version.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\sys\config.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\machine\ieeefp.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\sys\features.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\sys\cdefs.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\machine\_default_types.h \
+ c:\x86_64-elf-tools-windows\lib\gcc\x86_64-elf\7.1.0\include\stddef.h \
+ c:\x86_64-elf-tools-windows\lib\gcc\x86_64-elf\7.1.0\include\stdarg.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\sys\reent.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\_ansi.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\sys\_types.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\machine\_types.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\sys\lock.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\sys\types.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\sys\_stdint.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\machine\endian.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\machine\_endian.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\sys\select.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\sys\_sigset.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\sys\_timeval.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\sys\timespec.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\sys\_timespec.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\sys\_pthreadtypes.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\sys\sched.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\machine\types.h \
+ d:\visualstudioprojects\guanfang\diy-x86os-master\start\newlib\i686-elf\include\sys\stdio.h

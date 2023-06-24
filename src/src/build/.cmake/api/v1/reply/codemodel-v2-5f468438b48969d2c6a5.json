@@ -1,0 +1,339 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					],
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0.0"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "source/boot",
+					"jsonFile" : "directory-source.boot-Debug-e32ed8e172d18c41a714.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "source/boot",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "source/loader",
+					"jsonFile" : "directory-source.loader-Debug-c085dfc97c955badf5e0.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "source/loader",
+					"targetIndexes" : 
+					[
+						4
+					]
+				},
+				{
+					"build" : "source/kernel",
+					"jsonFile" : "directory-source.kernel-Debug-4384d93899d7b295e598.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 3,
+					"source" : "source/kernel",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"build" : "source/applib",
+					"jsonFile" : "directory-source.applib-Debug-5e5d462fbfa8010f6a72.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 4,
+					"source" : "source/applib",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "source/shell",
+					"jsonFile" : "directory-source.shell-Debug-9bcd9f15bf3fe254031f.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 5,
+					"source" : "source/shell",
+					"targetIndexes" : 
+					[
+						6
+					]
+				},
+				{
+					"build" : "source/init",
+					"jsonFile" : "directory-source.init-Debug-bc1492dd513896d7b635.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 6,
+					"source" : "source/init",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "source/loop",
+					"jsonFile" : "directory-source.loop-Debug-59fddbe57aec05a21d60.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 7,
+					"source" : "source/loop",
+					"targetIndexes" : 
+					[
+						5
+					]
+				},
+				{
+					"build" : "source/snake",
+					"jsonFile" : "directory-source.snake-Debug-c294cd1de7927d68c972.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 8,
+					"source" : "source/snake",
+					"targetIndexes" : 
+					[
+						7
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "os"
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "boot",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "loader",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						4
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3
+					],
+					"name" : "kernel",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						4
+					],
+					"name" : "app",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						5
+					],
+					"name" : "shell",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						6
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						6
+					],
+					"name" : "init",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						7
+					],
+					"name" : "loop",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						5
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						8
+					],
+					"name" : "snake",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						7
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 4,
+					"id" : "app::@2ef8eb2e4770df38f87f",
+					"jsonFile" : "target-app-Debug-8f1755b5993866a0b02b.json",
+					"name" : "app",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "boot::@a4fbfdde3044a49ad01d",
+					"jsonFile" : "target-boot-Debug-44f3c6263d2fe33efeb4.json",
+					"name" : "boot",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "init::@fa7672a329b369120015",
+					"jsonFile" : "target-init-Debug-8bada9359eced1dd33e4.json",
+					"name" : "init",
+					"projectIndex" : 6
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "kernel::@483af936ae9a949d521e",
+					"jsonFile" : "target-kernel-Debug-a60411d8c46c63432621.json",
+					"name" : "kernel",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "loader::@346703cd72729101d3c6",
+					"jsonFile" : "target-loader-Debug-4b7856871add32b04a52.json",
+					"name" : "loader",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "loop::@c739ad1222b82d308c45",
+					"jsonFile" : "target-loop-Debug-21bc0633cd922341112e.json",
+					"name" : "loop",
+					"projectIndex" : 7
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "shell::@3c59f89bbaefae7d5c66",
+					"jsonFile" : "target-shell-Debug-c8b0f9ac4acb432e144d.json",
+					"name" : "shell",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 8,
+					"id" : "snake::@bc872afa2278bd540aa9",
+					"jsonFile" : "target-snake-Debug-e5abc224ce8b9d7af2af.json",
+					"name" : "snake",
+					"projectIndex" : 8
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/VisualStudioProjects/guanfang/diy-x86os-master/start/test/build",
+		"source" : "D:/VisualStudioProjects/guanfang/diy-x86os-master/start/test"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}
