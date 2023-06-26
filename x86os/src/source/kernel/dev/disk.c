@@ -28,6 +28,9 @@ static int     task_on_op;
 void disk_init    (void);
 
 
+// 磁盘驱动接口，定义之后会被注册到设备驱动接口上 dev_open/dev_read/...
+// 然后设备文件系统和FAT16文件系统会调用设备驱动接口实现相关操作
+// 最后为了实现跨文件系统之间操作等设计了虚拟文件系统接口
 int  disk_open    (device_t * dev);
 int  disk_read    (device_t * dev, int start_sector, char * buf, int count);
 int  disk_write   (device_t * dev, int start_sector, char * buf, int count);
@@ -278,6 +281,12 @@ int disk_open (device_t * dev) {
 
 /**
  * @brief 读磁盘
+ * 进程在往磁盘读写数据时，需要与中断相互配合，因此需要信号量来辅助完成
+ * (1) 进程向磁盘发起读写请求
+ * (2) 进程等待磁盘准备数据
+ * (3) 磁盘准备数据操作完成，触发中断
+ * (4) 中断处理程序向进程发送信号
+ * (5) 进程开始从磁盘读取数据
  */
 int disk_read (device_t * dev, int start_sector, char * buf, int count) {
     // 取分区信息
@@ -297,8 +306,12 @@ int disk_read (device_t * dev, int start_sector, char * buf, int count) {
     task_on_op = 1;
 
     int cnt;
+
+    // 发起读磁盘命令
     ata_send_cmd(disk, part_info->start_sector + start_sector, count, DISK_CMD_READ);
+
     for (cnt = 0; cnt < count; cnt++, buf += disk->sector_size) {
+
         // 利用信号量等待中断通知，然后再读取数据
         if (task_current()) {
             sem_wait(disk->op_sem);

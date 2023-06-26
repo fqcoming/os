@@ -42,7 +42,8 @@ const char * path_next_child (const char * path);
 // static void fs_protect (fs_t * fs);
 // static void fs_unprotect (fs_t * fs);
 
- 
+
+// 虚拟文件系统接口
 int sys_open     (const char *name, int flags, ...);
 int sys_dup      (int file);
 int sys_ioctl    (int fd, int cmd, int arg0, int arg1);
