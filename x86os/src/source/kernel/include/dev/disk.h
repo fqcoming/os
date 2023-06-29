@@ -10,7 +10,7 @@
 #define DISK_NAME_SIZE              32      // 磁盘名称大小
 #define DISK_CNT                    2       // 磁盘的数量
 #define DISK_PRIMARY_PART_CNT       (4+1)       // 主分区数量最多才4个
-#define DISK_PER_CHANNEL            2       // 每通道磁盘数量
+#define DISK_PER_CHANNEL            2       // 每通道磁盘数量,即PrimaryBus或SecondaryBus总线上有多少个磁盘插槽
 
 // https://wiki.osdev.org/ATA_PIO_Mode#IDENTIFY_command
 // 只考虑支持主总结primary bus
@@ -83,30 +83,35 @@ typedef struct _partinfo_t {
         FS_INVALID = 0x00,      // 无效文件系统类型
         FS_FAT16_0 = 0x06,      // FAT16文件系统类型
         FS_FAT16_1 = 0x0E,
-    }type;
+    } type;
 
 	int start_sector;           // 起始扇区
 	int total_sector;           // 总扇区
-}partinfo_t;
+} partinfo_t;
 
 /**
  * @brief 磁盘结构
  */
 typedef struct _disk_t {
-    char name[DISK_NAME_SIZE];      // 磁盘名称
+    char name[DISK_NAME_SIZE];      // 磁盘名称: sda/sdb
 
     enum {
         DISK_DISK_MASTER = (0 << 4),     // 主设备
         DISK_DISK_SLAVE = (1 << 4),      // 从设备
-    }drive;
+    } drive;
 
-    uint16_t port_base;             // 端口起始地址
-    int sector_size;                // 块大小
+    uint16_t port_base;             // IO 端口起始地址 0x1F0 ~ 0x1F7
+    int sector_size;                // 块大小,扇区大小
     int sector_count;               // 总扇区数量
+
+    // 一个磁盘可以被划分为多个分区
 	partinfo_t partinfo[DISK_PRIMARY_PART_CNT];	// 分区表, 包含一个描述整个磁盘的假分区信息
+
     mutex_t * mutex;              // 访问该通知的互斥信号量
     sem_t * op_sem;               // 读写命令操作的同步信号量
-}disk_t;
+} disk_t;
+
+
 
 void disk_init (void);
 

@@ -8,7 +8,11 @@
 #include "core/memory.h"
 #include "core/task.h"
 
-static disk_t  disk_buf[DISK_CNT];  // 通道结构
+
+// Primary Bus即为一个通道，Secondary Bus即为另一个通道
+// 项目中使用Primary Bus通道，这个通道上又有两个磁盘插槽，能插上一个主磁盘设备和一个从磁盘设备
+
+static disk_t  disk_buf[DISK_CNT];  // 通道结构，计算机支持多个磁盘，记录系统所有磁盘信息
 static mutex_t mutex;               // 通道信号量
 static sem_t   op_sem;              // 通道操作的信号量
 static int     task_on_op;
@@ -217,6 +221,8 @@ static int identify_disk (disk_t * disk) {
 /**
  * @brief 磁盘初始化及检测
  * 以下只是将相关磁盘相关的信息给读取到内存中
+ * 识别计算机中有多少块硬盘，检测每块磁盘相应的特性并放入disk_buf里面
+ * 在文件系统初始化fs_init()函数调用
  */
 void disk_init (void) {
     log_printf("Checking disk...");
@@ -229,19 +235,22 @@ void disk_init (void) {
     sem_init(&op_sem, 0);       // 没有操作完成
 
     // 检测各个硬盘, 读取硬件是否存在，有其相关信息
+    // 这里只检查primary bus总线的磁盘数量和信息
     for (int i = 0; i < DISK_PER_CHANNEL; i++) {
         disk_t * disk = disk_buf + i;
 
         // 先初始化各字段
-        kernel_sprintf(disk->name, "sd%c", i + 'a');
-        disk->drive = (i == 0) ? DISK_DISK_MASTER : DISK_DISK_SLAVE;
-        disk->port_base = IOBASE_PRIMARY;
+        kernel_sprintf(disk->name, "sd%c", i + 'a');  // sda, sdb, sdc, ...
+        // i = 0 为primary master drive, i != 0 为primary slave drive
+        disk->drive = (i == 0) ? DISK_DISK_MASTER : DISK_DISK_SLAVE;  
+        disk->port_base = IOBASE_PRIMARY;  // primary bus 上的主从设备基地址一致 0x1F0
         disk->mutex = &mutex;
         disk->op_sem = &op_sem;
 
         // 识别磁盘，有错不处理，直接跳过
         int err = identify_disk(disk);
         if (err == 0) {
+            // 没有错误
             print_disk_info(disk);
         }
     }
