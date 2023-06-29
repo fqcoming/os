@@ -710,6 +710,7 @@ void fatfs_close (file_t * file) {
 
 /**
  * @brief 文件读写位置的调整
+ * dir: ???????
  */
 int fatfs_seek (file_t * file, uint32_t offset, int dir) {
      // 只支持基于文件开头的定位

@@ -15,10 +15,10 @@
 
 #define FS_TABLE_SIZE		10		// 文件系统表数量
 
-static list_t mounted_list;			// 已挂载的文件系统
-static list_t free_list;				// 空闲fs列表
-static fs_t   fs_tbl[FS_TABLE_SIZE];		// 文件系统列表
-static fs_t * root_fs;				// 根文件系统
+static list_t mounted_list;			   // 已挂载的文件系统
+static list_t free_list;		       // 空闲fs列表
+static fs_t   fs_tbl[FS_TABLE_SIZE];   // 文件系统列表
+static fs_t * root_fs;				   // 根文件系统
 
 
 extern fs_op_t devfs_op;
