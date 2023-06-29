@@ -17,6 +17,45 @@ static uint32_t idle_task_stack[IDLE_STACK_SIZE];	// 空闲任务堆栈
 static task_t task_table[TASK_NR];      // 用户进程表
 static mutex_t task_table_mutex;        // 进程表互斥访问锁
 
+
+
+// static int tss_init (task_t * task, int flag, uint32_t entry, uint32_t esp);
+int task_init (task_t *task, const char * name, int flag, uint32_t entry, uint32_t esp);
+void task_start(task_t * task);
+void task_uninit (task_t * task);
+void simple_switch (uint32_t ** from, uint32_t * to);
+void task_switch_from_to (task_t * from, task_t * to);
+void task_first_init (void);
+task_t * task_first_task (void);
+// static void idle_task_entry (void);
+void task_manager_init (void);
+void task_set_ready(task_t *task);
+void task_set_block (task_t *task);
+// static task_t * task_next_run (void);
+void task_set_sleep(task_t *task, uint32_t ticks);
+void task_set_wakeup (task_t *task);
+task_t * task_current (void);
+file_t * task_file (int fd);
+int task_alloc_fd (file_t * file);
+void task_remove_fd (int fd);
+int sys_yield (void);
+void task_dispatch (void);
+void task_time_tick (void);
+// static task_t * alloc_task (void);
+// static void free_task (task_t * task);
+void sys_msleep (uint32_t ms);
+// static void copy_opened_files(task_t * child_task);
+int sys_fork (void);
+// static int load_phdr(int file, Elf32_Phdr * phdr, uint32_t page_dir);
+// static uint32_t load_elf_file (task_t * task, const char * name, uint32_t page_dir);
+// static int copy_args (char * to, uint32_t page_dir, int argc, char **argv);
+int sys_execve(char *name, char **argv, char **env);
+int sys_getpid (void);
+int sys_wait(int* status);
+void sys_exit(int status);
+
+
+
 static int tss_init (task_t * task, int flag, uint32_t entry, uint32_t esp) {
     // 为TSS分配GDT
     int tss_sel = gdt_alloc_desc();
