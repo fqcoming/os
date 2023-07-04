@@ -143,7 +143,7 @@ simple_switch:
 	pop %ebp
   	ret
 
-     .global exception_handler_syscall
+    .global exception_handler_syscall
     .extern do_handler_syscall
 exception_handler_syscall:
 	// 保存前一任务的状态

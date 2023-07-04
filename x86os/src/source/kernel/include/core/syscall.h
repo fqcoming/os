@@ -41,7 +41,7 @@ typedef struct _syscall_frame_t {
 	int eip, cs;
 	int func_id, arg0, arg1, arg2, arg3;
 	int esp, ss;
-}syscall_frame_t;
+} syscall_frame_t;
 
 void exception_handler_syscall (void);		// syscall处理
 

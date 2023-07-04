@@ -29,6 +29,7 @@ void segment_desc_set(int selector, uint32_t base, uint32_t limit, uint16_t attr
 
 /**
  * 设置门描述符
+ * 
  */
 void gate_desc_set(gate_desc_t * desc, uint16_t selector, uint32_t offset, uint16_t attr) {
 	desc->offset15_0 = offset & 0xffff;
@@ -83,9 +84,9 @@ void init_gdt(void) {
                      | SEG_TYPE_RW | SEG_D | SEG_G);
 
     // 调用门
-    gate_desc_set((gate_desc_t *)(gdt_table + (SELECTOR_SYSCALL >> 3)),
+    gate_desc_set((gate_desc_t *)(gdt_table + (SELECTOR_SYSCALL >> 3)),  // 调用门段描述符在GDT表中的地址
             KERNEL_SELECTOR_CS,
-            (uint32_t)exception_handler_syscall,
+            (uint32_t)exception_handler_syscall,   // 被调用例程所在代码段的描述符偏移量
             GATE_P_PRESENT | GATE_DPL3 | GATE_TYPE_SYSCALL | SYSCALL_PARAM_COUNT);
 
     // 加载gdt

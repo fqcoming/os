@@ -1,0 +1,39 @@
+
+
+切换不同特权级的几种方法：
+
+1.调用门：用于系统调用
+2.任务门：用于任务切换
+3.中断门：用于中断和异常
+4.陷阱门：用于中断和异常
+
+应用程序可通过调用门接口，实现在低特权级的情况下对操作系统提供的接口函数进行调用。
+
+
+首先需要在GDT表中添加调用门描述符
+
+
+// 调用门
+gate_desc_set((gate_desc_t *)(gdt_table + (SELECTOR_SYSCALL >> 3)),  // 调用门段描述符在GDT表中的地址
+        KERNEL_SELECTOR_CS,
+        (uint32_t)exception_handler_syscall,   // 被调用例程所在代码段的描述符偏移量
+        GATE_P_PRESENT | GATE_DPL3 | GATE_TYPE_SYSCALL | SYSCALL_PARAM_COUNT);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
