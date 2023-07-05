@@ -9,12 +9,12 @@
 
 #include <sys/stat.h>
 typedef struct _syscall_args_t {
-    int id;
+    int id;    // 指定调用的内核函数的id号, 其id号就是sys_table表中的索引下标
     int arg0;
     int arg1;
     int arg2;
     int arg3;
-}syscall_args_t;
+} syscall_args_t;
 
 int msleep (int ms);
 int fork(void);

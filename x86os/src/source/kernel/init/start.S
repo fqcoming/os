@@ -147,12 +147,12 @@ simple_switch:
     .extern do_handler_syscall
 exception_handler_syscall:
 	// 保存前一任务的状态
-	pusha
-	push %ds
+	pusha      // 将处理器中的通用寄存器（AX、CX、DX、BX、SP、BP、SI、DI）的值按照固定的顺序压入栈中
+	push %ds   
 	push %es
 	push %fs
 	push %gs
-	pushf
+	pushf     // 将处理器标志寄存器（FLAGS寄存器）的值压入栈中
 
 	// 使用内核段寄存器，避免使用应用层的
 	mov $(KERNEL_SELECTOR_DS), %eax
@@ -163,9 +163,9 @@ exception_handler_syscall:
 
     // 调用处理函数
     mov %esp, %eax
-    push %eax
+    push %eax       // 栈增长了4字节
 	call do_handler_syscall
-	add $4, %esp
+	add $4, %esp    // 栈是从高地址向低地址压栈，弹栈时即将栈指针加上4字节即可
 
     // 再切换回来
 	popf

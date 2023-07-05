@@ -9,6 +9,7 @@
  * 执行系统调用
  */
 static inline int sys_call (syscall_args_t * args) {
+    // 
     const unsigned long sys_gate_addr[] = {0, SELECTOR_SYSCALL | 0};  // 使用特权级0
     int ret;
 
