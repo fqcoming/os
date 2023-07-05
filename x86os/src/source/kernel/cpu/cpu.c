@@ -85,9 +85,9 @@ void init_gdt(void) {
 
     // 调用门
     gate_desc_set((gate_desc_t *)(gdt_table + (SELECTOR_SYSCALL >> 3)),  // 调用门段描述符在GDT表中的地址
-            KERNEL_SELECTOR_CS,
-            (uint32_t)exception_handler_syscall,   // 被调用例程所在代码段的描述符偏移量
-            GATE_P_PRESENT | GATE_DPL3 | GATE_TYPE_SYSCALL | SYSCALL_PARAM_COUNT);
+            KERNEL_SELECTOR_CS,                                          // 被调用例程所在代码段的描述符选择子
+            (uint32_t)exception_handler_syscall,                         // 被调用例程在目标代码段内的偏移量
+            GATE_P_PRESENT | GATE_DPL3 | GATE_TYPE_SYSCALL | SYSCALL_PARAM_COUNT);  // 
 
     // 加载gdt
     lgdt((uint32_t)gdt_table, sizeof(gdt_table));
