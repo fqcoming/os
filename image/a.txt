@@ -1,4 +1,0 @@
-select vdisk file="D:\x86os\image\disk2.vhd" 
-attach vdisk 
-select partition 1 
-assign letter=k 
