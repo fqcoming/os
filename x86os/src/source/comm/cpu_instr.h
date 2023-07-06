@@ -32,8 +32,11 @@ static inline void sti() {
 	__asm__ __volatile__("sti");
 }
 
+// start: GDT表起始地址
+// size: GDT表大小，字节为单位，即最大偏移字节
 static inline void lgdt(uint32_t start, uint32_t size) {
-	struct {
+	// GDTR寄存器共48位，低16位为GDT界限，高32位为GDT内存起始地址
+	struct {  
 		uint16_t limit;
 		uint16_t start15_0;
 		uint16_t start31_16;
@@ -41,9 +44,9 @@ static inline void lgdt(uint32_t start, uint32_t size) {
 
 	gdt.start31_16 = start >> 16;
 	gdt.start15_0 = start & 0xFFFF;
-	gdt.limit = size - 1;
+	gdt.limit = size - 1;  // 表的界限是0 ~ size - 1
 
-	__asm__ __volatile__("lgdt %[g]"::[g]"m"(gdt));
+	__asm__ __volatile__("lgdt %[g]"::[g]"m"(gdt));  // 将gdt表地址和界限加载到gdtr寄存器中
 }
 
 static inline uint32_t read_cr0() {

@@ -39,6 +39,7 @@
 
 /**
  * GDT描述符
+ * 段描述符格式
  */
 typedef struct _segment_desc_t {
 	uint16_t limit15_0;
@@ -46,7 +47,7 @@ typedef struct _segment_desc_t {
 	uint8_t base23_16;
 	uint16_t attr;
 	uint8_t base31_24;
-}segment_desc_t;
+} segment_desc_t;
 
 /*
  * 调用门描述符
@@ -56,7 +57,7 @@ typedef struct _gate_desc_t {
 	uint16_t selector;
 	uint16_t attr;
 	uint16_t offset31_16;
-}gate_desc_t;
+} gate_desc_t;
 
 /**
  * tss描述符
@@ -69,7 +70,7 @@ typedef struct _tss_t {
     uint32_t es, cs, ss, ds, fs, gs;
     uint32_t ldt;
     uint32_t iomap;
-}tss_t;
+} tss_t;
 #pragma pack()
 
 void cpu_init (void);

@@ -24,10 +24,11 @@ _start:
     # kernel_init(boot_info)
     call kernel_init
 
-	// 重新加载GDT
+	// 重新加载GDT之后，使用远跳转指令jmp清空流水线，更新段描述符缓冲寄存器
 	jmp $KERNEL_SELECTOR_CS, $gdt_reload
 
 gdt_reload:
+	// 更新段描述符缓冲寄存器
 	mov $KERNEL_SELECTOR_DS, %ax		// 16为数据段选择子
 	mov %ax, %ds
     mov %ax, %ss
@@ -35,7 +36,7 @@ gdt_reload:
     mov %ax, %fs
     mov %ax, %gs
 
-	// 栈设置
+	// 栈设置，设置栈顶指针
 	mov $(stack + KERNEL_STACK_SIZE), %esp
 
 	// 栈和段等沿用之前的设置
@@ -43,7 +44,7 @@ gdt_reload:
 
 	.bss
 .comm stack, KERNEL_STACK_SIZE    // comm 声明未初始化的通用内存区域，以字节计
-
+                                  // 内核栈尺寸设为了8kb，stack表示栈的起始地址
 
 // 中断发生时，会自动切换到特权级0对应的栈中去执行
 // 并且只保存ss,esp,cs,eip,flags寄存器

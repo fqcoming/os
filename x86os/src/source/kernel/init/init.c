@@ -24,7 +24,7 @@ void kernel_init (boot_info_t * boot_info) {
     init_boot_info = boot_info;
 
     // 初始化CPU，再重新加载
-    cpu_init();
+    cpu_init();   // 对GDT表初始化，对互斥锁进行初始化
     irq_init();
     log_init();
 
