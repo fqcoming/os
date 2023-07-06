@@ -47,7 +47,7 @@ typedef struct _exception_frame_t {
     int error_code;
     int eip, cs, eflags;
     int esp3, ss3;
-}exception_frame_t;
+} exception_frame_t;
 
 typedef void(*irq_handler_t)(void);
 

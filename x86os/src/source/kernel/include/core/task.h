@@ -84,7 +84,10 @@ typedef struct _task_manager_t {
 
 	int app_code_sel;			// 任务代码段选择子
 	int app_data_sel;			// 应用任务的数据段选择子
+
 } task_manager_t;
+
+
 
 void task_manager_init (void);
 void task_first_init (void);
