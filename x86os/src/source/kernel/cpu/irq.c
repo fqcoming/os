@@ -231,7 +231,9 @@ void pic_send_eoi(int irq_num) {
 }
 
 /**
- * @brief 中断和异常初始化
+ * @brief 中断和异常初始化，中断向量表idt_table初始化
+ * GATE_TYPE_IDT 表示门描述符为中断门描述符
+ * GATE_DPL0 表示特权级为0，最高特权级，表示中断门描述符不能有用户程序在特权级3主动调用的中断，特权级检测通不过，详情《真相还原》307页
  */
 void irq_init(void) {
 	for (uint32_t i = 0; i < IDT_TABLE_NR; i++) {

@@ -90,6 +90,9 @@ static inline void far_jump(uint32_t selector, uint32_t offset) {
 	__asm__ __volatile__("ljmpl *(%[a])"::[a]"r"(addr));
 }
 
+
+// start 表示idt表项的起始地址：32位表基址
+// size 表大小，用于初始化idtr寄存器的16位表界限
 static inline void lidt(uint32_t start, uint32_t size) {
 	struct {
 		uint16_t limit;

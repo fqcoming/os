@@ -50,11 +50,14 @@ typedef struct _segment_desc_t {
 } segment_desc_t;
 
 /*
- * 调用门描述符
+ * 在IDT表中的调用门、任务门、中断门、陷阱门描述符结构体
+ * 中断门：
+ * selector为中断处理程序目标代码段描述符在GDT中的选择子
+ * offset15_0和offset31_16表示中断处理程序在目标段内的偏移量
  */
 typedef struct _gate_desc_t {
 	uint16_t offset15_0;
-	uint16_t selector;
+	uint16_t selector;    // 
 	uint16_t attr;
 	uint16_t offset31_16;
 } gate_desc_t;
@@ -73,9 +76,10 @@ typedef struct _tss_t {
 } tss_t;
 #pragma pack()
 
+
 void cpu_init (void);
 void segment_desc_set(int selector, uint32_t base, uint32_t limit, uint16_t attr);
-void gate_desc_set(gate_desc_t * desc, uint16_t selector, uint32_t offset, uint16_t attr);
+void gate_desc_set(gate_desc_t * desc, uint16_t selector, uint32_t offset, uint16_t attr);  // 门描述符初始化
 int gdt_alloc_desc (void);
 void gdt_free_sel (int sel);
 
