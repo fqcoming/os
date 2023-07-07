@@ -52,7 +52,12 @@ typedef struct _task_t {
 	list_node_t run_node;		// 运行相关结点
 	list_node_t wait_node;		// 等待队列
 	list_node_t all_node;		// 所有队列结点
+	
 } task_t;
+
+
+
+
 
 int  task_init (task_t *task, const char * name, int flag, uint32_t entry, uint32_t esp);
 void task_switch_from_to (task_t * from, task_t * to);

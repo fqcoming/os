@@ -51,7 +51,7 @@ void gdt_free_sel (int sel) {
 }
 
 /**
- * 分配一个GDT推荐表符
+ * 分配一个GDT推荐表符，返回一个偏移地址
  */
 int gdt_alloc_desc (void) {
     int i;
@@ -67,7 +67,7 @@ int gdt_alloc_desc (void) {
     }
     mutex_unlock(&mutex);
 
-    return i >= GDT_TABLE_SIZE ? -1 : i * sizeof(segment_desc_t);;
+    return i >= GDT_TABLE_SIZE ? -1 : i * sizeof(segment_desc_t);
 }
 
 /**

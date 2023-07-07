@@ -11,13 +11,14 @@ int bitmap_byte_count (int bit_count) {
 
 /**
  * @brief 位图初始化
+ * init_bit: 将位图的所有位置成0或1，由init_bit指定，即init_bit可能是0或1
  */
 void bitmap_init (bitmap_t * bitmap, uint8_t * bits, int count, int init_bit) {
     bitmap->bit_count = count;
     bitmap->bits = bits;
 
     int bytes = bitmap_byte_count(bitmap->bit_count);
-    kernel_memset(bitmap->bits, init_bit ? 0xFF: 0, bytes);
+    kernel_memset(bitmap->bits, init_bit ? 0xFF : 0, bytes);
 }
 
 /**

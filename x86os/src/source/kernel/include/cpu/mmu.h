@@ -2,18 +2,21 @@
 #ifndef MMU_H
 #define MMU_H
 
+// 内存管理单元: MMU
+
 #include "comm/types.h"
 #include "comm/cpu_instr.h"
 
-#define PDE_CNT             1024
-#define PTE_CNT             1024
-#define PTE_P       (1 << 0)
-#define PTE_W           (1 << 1)
-#define PDE_P       (1 << 0)
-#define PTE_U           (1 << 2)
-#define PDE_U           (1 << 2)
+#define PDE_CNT             1024      // 页目录表项数量
+#define PTE_CNT             1024      // 页表项数量
+#define PTE_P              (1 << 0)   // 若为1表示该页存在于物理内存中，若为0表示该表不在物理内存中，访问时会触发pagefault
+#define PTE_W              (1 << 1)   // 若为1表示可读可写，若为0表示可读不可写
+#define PDE_P              (1 << 0)
+#define PTE_U              (1 << 2)   // 若为1表示User级任意级别特权的程序都可以访问该页，若为0表示Supervisor特征级3不能访问
+#define PDE_U              (1 << 2)
 
 #pragma pack(1)
+
 /**
  * @brief Page-Table Entry
  */
@@ -31,7 +34,7 @@ typedef union _pde_t {
         uint32_t : 4;                           // 11:8 Ignored
         uint32_t phy_pt_addr : 20;              // 高20位page table物理地址
     };
-}pde_t;
+} pde_t;
 
 /**
  * @brief Page-Table Entry
@@ -51,7 +54,7 @@ typedef union _pte_t {
         uint32_t : 3;                           // Ignored
         uint32_t phy_page_addr : 20;            // 高20位物理地址
     };
-}pte_t;
+} pte_t;
 
 #pragma pack()
 

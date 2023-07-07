@@ -10,14 +10,14 @@ static addr_alloc_t paddr_alloc;        // 物理地址分配结构
 static pde_t kernel_page_dir[PDE_CNT] __attribute__((aligned(MEM_PAGE_SIZE))); // 内核页目录表
 
 /**
- * @brief 获取当前页表地址
+ * @brief 获取当前页目录表起始地址
  */
 static pde_t * current_page_dir (void) {
-    return (pde_t *)task_current()->tss.cr3;
+    return (pde_t *)task_current()->tss.cr3;  // cr3 存着pde页目录表的起始地址
 }
 
 /**
- * @brief 初始化地址分配结构
+ * @brief 初始化内存物理地址分配结构
  * 以下不检查start和size的页边界，由上层调用者检查
  */
 static void addr_alloc_init (addr_alloc_t * alloc, uint8_t * bits,
@@ -31,6 +31,7 @@ static void addr_alloc_init (addr_alloc_t * alloc, uint8_t * bits,
 
 /**
  * @brief 分配多页内存
+ * 从物理内存中分配连续的page_count页内存
  */
 static uint32_t addr_alloc_page (addr_alloc_t * alloc, int page_count) {
     uint32_t addr = 0;
@@ -81,6 +82,8 @@ static uint32_t total_mem_size(boot_info_t * boot_info) {
     return mem_size;
 }
 
+// 根据虚拟地址高10位在页目录表找到虚拟地址对应的页表，根据虚拟地址中间10位在页表中找到虚拟地址对应的页表项，返回页表项的地址
+// vaddr 虚拟线性地址 alloc 表示当虚拟地址对应的页表项不存在时，是否创建一个页表项，alloc = 0 表示不创建，1则创建，页目录表项肯定存在的。
 pte_t * find_pte (pde_t * page_dir, uint32_t vaddr, int alloc) {
     pte_t * page_table;
 
@@ -113,6 +116,7 @@ pte_t * find_pte (pde_t * page_dir, uint32_t vaddr, int alloc) {
 
     return page_table + pte_index(vaddr);
 }
+
 
 /**
  * @brief 将指定的地址空间进行一页的映射
@@ -427,6 +431,8 @@ void memory_init (boot_info_t * boot_info) {
     // 先切换到当前页表
     mmu_set_page_dir((uint32_t)kernel_page_dir);
 }
+
+
 
 /**
  * @brief 调整堆的内存分配，返回堆之前的指针

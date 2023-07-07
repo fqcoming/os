@@ -31,9 +31,7 @@ void kernel_init (boot_info_t * boot_info) {
     // 内存初始化要放前面一点，因为后面的代码可能需要内存分配
     memory_init(boot_info);
     fs_init();  // 文件系统初始化
-
     time_init();
-
     task_manager_init();
 }
 
@@ -70,11 +68,17 @@ void move_to_first_task(void) {
     );
 }
 
+
+
 void init_main(void) {
     log_printf("==============================");
     log_printf("Kernel is running....");
     log_printf("Version: %s, name: %s", OS_VERSION, "tiny x86 os");
     log_printf("==============================");
+
+    // 当IF位被设置为1时，表示中断是打开的，处理器可以响应中断请求。
+    // 而当IF位被设置为0时，表示中断是禁止的，处理器将不会响应中断请求。
+    // 0x6: 0110 表示中断打开的
 
     // 初始化任务
     task_first_init();

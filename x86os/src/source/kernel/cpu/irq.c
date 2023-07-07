@@ -189,6 +189,10 @@ void do_handler_virtual_exception(exception_frame_t * frame) {
 	do_default_handler(frame, "Virtualization Exception.");
 }
 
+
+// Programmable Interrupt Controller 可编程中断控制器
+// 微处理器与外设之间的中断处理的桥梁
+// 可编程中断控制器是微处理器与外设之间的中断处理的桥梁，由外设发出的中断请求需要中断控制器来进行处理。
 static void init_pic(void) {
     // 边缘触发，级联，需要配置icw4, 8086模式
     outb(PIC0_ICW1, PIC_ICW1_ALWAYS_1 | PIC_ICW1_ICW4);
@@ -234,6 +238,7 @@ void pic_send_eoi(int irq_num) {
  * @brief 中断和异常初始化，中断向量表idt_table初始化
  * GATE_TYPE_IDT 表示门描述符为中断门描述符
  * GATE_DPL0 表示特权级为0，最高特权级，表示中断门描述符不能有用户程序在特权级3主动调用的中断，特权级检测通不过，详情《真相还原》307页
+ * exception_handler_unknown 只能汇编代码来完成，因为c语言函数返回指令ret是近返回,而中断程序返回需要使用iret中断返回
  */
 void irq_init(void) {
 	for (uint32_t i = 0; i < IDT_TABLE_NR; i++) {
@@ -265,7 +270,7 @@ void irq_init(void) {
 
 	lidt((uint32_t)idt_table, sizeof(idt_table));
 
-	// 初始化pic 控制器
+	// 初始化 pic 控制器
 	init_pic();
 }
 

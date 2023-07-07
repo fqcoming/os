@@ -19,6 +19,7 @@
         "console.h": "c",
         "stat.h": "c",
         "file.h": "c",
-        "syscall.h": "c"
+        "syscall.h": "c",
+        "cpu_instr.h": "c"
     },
 }

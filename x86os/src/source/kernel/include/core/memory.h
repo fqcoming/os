@@ -22,8 +22,10 @@
 #define MEM_TASK_STACK_SIZE         (MEM_PAGE_SIZE * 500)   // 初始500KB栈
 #define MEM_TASK_ARG_SIZE           (MEM_PAGE_SIZE * 4)     // 参数和环境变量占用的大小
 
+
+
 /**
- * @brief 地址分配结构
+ * @brief 内存物理地址分配结构
  */
 typedef struct _addr_alloc_t {
     mutex_t mutex;              // 地址分配互斥信号量
@@ -32,7 +34,9 @@ typedef struct _addr_alloc_t {
     uint32_t page_size;         // 页大小
     uint32_t start;             // 起始地址
     uint32_t size;              // 地址大小
-}addr_alloc_t;
+} addr_alloc_t;
+
+
 
 /**
  * @brief 虚拟地址到物理地址之间的映射关系表
@@ -42,10 +46,10 @@ typedef struct _memory_map_t {
     void * vend;
     void * pstart;       // 物理地址
     uint32_t perm;      // 访问权限
-}memory_map_t;
+} memory_map_t;
 
 
-
+// Unified Virtual Memory : uvm
 
 void     memory_init               (boot_info_t * boot_info);
 uint32_t memory_create_uvm         (void);
