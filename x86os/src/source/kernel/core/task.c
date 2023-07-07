@@ -577,6 +577,7 @@ int sys_fork (void) {
     // 创建成功，返回子进程的pid
     task_start(child_task);
     return child_task->pid;
+    
 fork_failed:
     if (child_task) {
         task_uninit (child_task);
