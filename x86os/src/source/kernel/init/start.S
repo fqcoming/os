@@ -22,7 +22,7 @@ _start:
     push 4(%esp)
 
     # kernel_init(boot_info)
-    call kernel_init
+    call kernel_init   
 
 	// 重新加载GDT之后，使用远跳转指令jmp清空流水线，更新段描述符缓冲寄存器
 	jmp $KERNEL_SELECTOR_CS, $gdt_reload
