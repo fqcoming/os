@@ -46,11 +46,14 @@ struct dirent {
 typedef struct _DIR {
     int index;               // 当前遍历的索引
     struct dirent dirent;
-}DIR;
+} DIR;
 
-DIR * opendir(const char * name);
+
+DIR * opendir(const char * name);   // name: 需要打开的目录的路径
 struct dirent* readdir(DIR* dir);
 int closedir(DIR *dir);
+
+
 int unlink(const char *pathname);
 
 #endif //LIB_SYSCALL_H
