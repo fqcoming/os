@@ -8,10 +8,13 @@
 #include "core/memory.h"
 #include "core/task.h"
 
+// 一个主板上有PrimaryBus和SecondaryBus
+// 一个PrimaryBus有Primary Master Drive和Primary Slave Drive, 其控制端口：0x3F6, 中断端口: IRQ14, IO端口: 0x1F0-0X1F7
+// 一个SecondaryBus有Secondary Master Drive和Secondary Slave Drive, 其控制端口：0x376, 中断端口: IRQ15, IO端口: ???
 
 // Primary Bus即为一个通道，Secondary Bus即为另一个通道
 // 项目中使用Primary Bus通道，这个通道上又有两个磁盘插槽，能插上一个主磁盘设备和一个从磁盘设备
-
+// 这里只支持Primary Bus通道的两个磁盘
 static disk_t  disk_buf[DISK_CNT];  // 通道结构，计算机支持多个磁盘，记录系统所有磁盘信息
 static mutex_t mutex;               // 通道信号量
 static sem_t   op_sem;              // 通道操作的信号量
@@ -63,7 +66,7 @@ dev_desc_t dev_disk_desc = {
 
 
 /**
- * 发送ata命令，支持多达16位的扇区，对我们目前的程序来书够用了。
+ * 发送ata命令，支持多达16位的扇区，对我们目前的程序来说够用了。
  */
 static void ata_send_cmd (disk_t * disk, uint32_t start_sector, uint32_t sector_count, int cmd) {
     outb(DISK_DRIVE(disk), DISK_DRIVE_BASE | disk->drive);		// 使用LBA寻址，并设置驱动器
@@ -144,6 +147,8 @@ static void print_disk_info (disk_t * disk) {
 /**
  * 获取指定序号的分区信息
  * 注意，该操作依赖物理分区分配，如果设备的分区结构有变化，则序号也会改变，得到的结果不同
+ * 课程中使用了disk1和disk2,其中disk1用于保存操作系统代码，不会进行分区，disk2用于分区
+ * disk2中一共有四个分区，课程中也只使用了第1个分区，其他分区为空
  */
 static int detect_part_info(disk_t * disk) {
     mbr_t mbr;
@@ -208,7 +213,7 @@ static int identify_disk (disk_t * disk) {
     // 分区0保存了整个磁盘的信息
     partinfo_t * part = disk->partinfo + 0;
     part->disk = disk;
-    kernel_sprintf(part->name, "%s%d", disk->name, 0);
+    kernel_sprintf(part->name, "%s%d", disk->name, 0);  // sda0
     part->start_sector = 0;
     part->total_sector = disk->sector_count;
     part->type = FS_INVALID;

@@ -15,6 +15,7 @@ struct _fs_t;
  * @brief 文件系统操作接口
  * 回调函数注册表结构体
  */
+
 typedef struct _fs_op_t {
 	int  (*mount)   (struct _fs_t * fs, int major, int minor);
     void (*unmount) (struct _fs_t * fs);
@@ -41,7 +42,7 @@ typedef struct _fs_op_t {
 typedef enum _fs_type_t {
     FS_FAT16,
     FS_DEVFS,
-}fs_type_t;
+} fs_type_t;
 
 
 typedef struct _fs_t {

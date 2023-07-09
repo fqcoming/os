@@ -22,6 +22,7 @@ struct _fs_t;
 /**
  * 文件描述符
  */
+
 typedef struct _file_t {
     char file_name[FILE_NAME_SIZE];	    // 文件名
     file_type_t type;                   // 文件类型，TTY文件，普通文件，目录文件

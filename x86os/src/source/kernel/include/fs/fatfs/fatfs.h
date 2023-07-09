@@ -25,6 +25,7 @@
 /**
  * FAT目录项
  */
+
 typedef struct _diritem_t {
     uint8_t DIR_Name[11];                   // 文件名
     uint8_t DIR_Attr;                      // 属性
@@ -41,28 +42,31 @@ typedef struct _diritem_t {
 } diritem_t;
 
 /**
- * 完整的DBR类型
+ * 完整的DBR类型: 共496B, 一个扇区最后2B用于结束标记0x55和0xaa
+ * 一个磁盘 = MBR + 分区FAT + 分区NTFS + ...
+ * MBR = dbr + FAT表1 + FAT表2 + 根目录区 + 文件数据
+ * dbr = 446字节的引导程序及参数 + 64字节的分区表 + 2字节结束标记0x55和0xaa
  */
 typedef struct _dbr_t {
-    uint8_t BS_jmpBoot[3];                 // 跳转代码
-    uint8_t BS_OEMName[8];                 // OEM名称
-    uint16_t BPB_BytsPerSec;               // 每扇区字节数
+    uint8_t BS_jmpBoot[3];                 // 跳转代码 
+    uint8_t BS_OEMName[8];                 // OEM名称: 生产厂商名
+    uint16_t BPB_BytsPerSec;               // 每扇区字节数 
     uint8_t BPB_SecPerClus;                // 每簇扇区数
     uint16_t BPB_RsvdSecCnt;               // 保留区扇区数
-    uint8_t BPB_NumFATs;                   // FAT表项数
-    uint16_t BPB_RootEntCnt;               // 根目录项目数
+    uint8_t BPB_NumFATs;                   // FAT表的份数
+    uint16_t BPB_RootEntCnt;               // 根目录可容纳的目录项数
     uint16_t BPB_TotSec16;                 // 总的扇区数
-    uint8_t BPB_Media;                     // 媒体类型
-    uint16_t BPB_FATSz16;                  // FAT表项大小
+    uint8_t BPB_Media;                     // 媒体类型: 介质描述符
+    uint16_t BPB_FATSz16;                  // FAT表项大小: 每FAT扇区数
     uint16_t BPB_SecPerTrk;                // 每磁道扇区数
     uint16_t BPB_NumHeads;                 // 磁头数
     uint32_t BPB_HiddSec;                  // 隐藏扇区数
     uint32_t BPB_TotSec32;                 // 总的扇区数
 
 	uint8_t BS_DrvNum;                     // 磁盘驱动器参数
-	uint8_t BS_Reserved1;				   // 保留字节
+	uint8_t BS_Reserved1;				   // 保留字节: 未使用
 	uint8_t BS_BootSig;                    // 扩展引导标记
-	uint32_t BS_VolID;                     // 卷标序号
+	uint32_t BS_VolID;                     // 卷标序号: 卷序列号
 	uint8_t BS_VolLab[11];                 // 磁盘卷标
 	uint8_t BS_FileSysType[8];             // 文件类型名称
 } dbr_t;
@@ -95,3 +99,22 @@ typedef struct _fat_t {
 typedef uint16_t cluster_t;
 
 #endif // FAT_H
+
+/*
+FAT16文件系统简介
+首先可以考虑让文件在磁盘上连续存储，但是当存储了大量大小不同的文件且经过多次删除、创建等操作之后，容易形成磁盘空间碎片。
+因此可以通过不连续存储，可以将碎片利用起来。
+FAT16将文件数据和链接关系分开存储。磁盘一个扇区大小512B，FAT表项大小为2B，一个表项内容代表了文件下一个数据块的位置，那么一个扇区可以存储256个表项，
+因此一次可以读取256个表项，速度就比文件数据和链接关系不分开读效率更高了。
+当分区上大量存储的是大文件时，则需要较多的FAT表项来表示一个大文件中所有数据块的链接关系。
+因此，为减少FAT表项的数量，FAT16采用簇来表示存储数据的基本数据块。假如一个簇为4KB，那么一个簇就由连续的8个扇区组成。
+*/
+
+
+
+
+
+
+
+
+

@@ -12,7 +12,6 @@
 // static int bread_sector  (fat_t * fat, int sector);
 // static int bwrite_secotr (fat_t * fat, int sector);
 
-
 int       cluster_is_valid   (cluster_t cluster);
 int       cluster_get_next   (fat_t * fat, cluster_t curr);
 int       cluster_set_next   (fat_t * fat, cluster_t curr, cluster_t next);
@@ -31,24 +30,20 @@ file_type_t diritem_get_type   (diritem_t * item);
 // static int         write_dir_entry (fat_t * fat, diritem_t * item, int index);
 // static int         expand_file     (file_t * file, int inc_bytes);
 // static int         move_file_pos   (file_t* file, fat_t * fat, uint32_t move_bytes, int expand);
+// static void read_from_diritem (fat_t * fat, file_t * file, diritem_t * item, int index);
 
 int  fatfs_mount   (struct _fs_t * fs, int dev_major, int dev_minor);
 void fatfs_unmount (struct _fs_t * fs);
-
-// static void read_from_diritem (fat_t * fat, file_t * file, diritem_t * item, int index);
-
-
 int  fatfs_open  (struct _fs_t * fs, const char * path, file_t * file);
 int  fatfs_read  (char * buf, int size, file_t * file);
 int  fatfs_write (char * buf, int size, file_t * file);
 void fatfs_close (file_t * file);
 int  fatfs_seek  (file_t * file, uint32_t offset, int dir);
 int  fatfs_stat  (file_t * file, struct stat *st);
-
-int fatfs_opendir  (struct _fs_t * fs, const char * name, DIR * dir);
-int fatfs_readdir  (struct _fs_t * fs, DIR* dir, struct dirent * dirent);
-int fatfs_closedir (struct _fs_t * fs, DIR *dir);
-int fatfs_unlink   (struct _fs_t * fs, const char * path);
+int  fatfs_opendir  (struct _fs_t * fs, const char * name, DIR * dir);
+int  fatfs_readdir  (struct _fs_t * fs, DIR* dir, struct dirent * dirent);
+int  fatfs_closedir (struct _fs_t * fs, DIR *dir);
+int  fatfs_unlink   (struct _fs_t * fs, const char * path);
 
 
 fs_op_t fatfs_op = {
@@ -60,7 +55,6 @@ fs_op_t fatfs_op = {
     .seek     = fatfs_seek,
     .stat     = fatfs_stat,
     .close    = fatfs_close,
-
     .opendir  = fatfs_opendir,
     .readdir  = fatfs_readdir,
     .closedir = fatfs_closedir,
@@ -417,6 +411,9 @@ static int move_file_pos(file_t* file, fat_t * fat, uint32_t move_bytes, int exp
 
 /**
  * @brief 挂载fat文件系统
+ * fs: 文件系统
+ * dev_major: 主设备号
+ * dev_minor: 次设备号
  */
 int fatfs_mount (struct _fs_t * fs, int dev_major, int dev_minor) {
     // 打开设备
@@ -506,6 +503,7 @@ static void read_from_diritem (fat_t * fat, file_t * file, diritem_t * item, int
 
 /**
  * @brief 打开指定的文件
+ * struct _fs_t * fs 
  */
 int fatfs_open (struct _fs_t * fs, const char * path, file_t * file) {
     fat_t * fat = (fat_t *)fs->data;

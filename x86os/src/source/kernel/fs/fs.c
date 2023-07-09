@@ -17,7 +17,8 @@
 
 static list_t mounted_list;			   // 已挂载的文件系统
 static list_t free_list;		       // 空闲fs列表
-static fs_t   fs_tbl[FS_TABLE_SIZE];   // 文件系统列表
+static fs_t   fs_tbl[FS_TABLE_SIZE];   // 文件系统列表，提前申请好内存，在文件系统初始化时将fs_tbl中所有元素都加入free_list中
+                                       // 当需要挂载文件系统时，在free_list中取一个空闲表项加入mounted_list即可。
 static fs_t * root_fs;				   // 根文件系统
 
 
@@ -95,6 +96,10 @@ static fs_op_t * get_fs_op (fs_type_t type, int major) {
 
 /**
  * @brief 挂载文件系统
+ * param1: 文件系统类型，比如：FS_DEVFS、FS_FAT16
+ * param2: 挂载点，比如："/dev"、"/home"
+ * param3: 主设备号，比如：0
+ * param4: 次设备号，比如：0
  */
 static fs_t * mount (fs_type_t type, char * mount_point, int dev_major, int dev_minor) {
 	fs_t * fs = (fs_t *)0;

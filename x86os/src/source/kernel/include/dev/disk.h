@@ -13,7 +13,7 @@
 #define DISK_PER_CHANNEL            2       // 每通道磁盘数量,即PrimaryBus或SecondaryBus总线上有多少个磁盘插槽
 
 // https://wiki.osdev.org/ATA_PIO_Mode#IDENTIFY_command
-// 只考虑支持主总结primary bus
+// 只考虑支持主总线primary bus
 #define IOBASE_PRIMARY              0x1F0
 #define	DISK_DATA(disk)				(disk->port_base + 0)		// 数据寄存器
 #define	DISK_ERROR(disk)			(disk->port_base + 1)		// 错误寄存器
@@ -40,8 +40,9 @@
 
 #pragma pack(1)
 
+
 /**
- * MBR的分区表项类型
+ * MBR的分区表项类型: 16字节大小
  */
 typedef struct _part_item_t {
     uint8_t boot_active;               // 分区是否活动
@@ -54,18 +55,25 @@ typedef struct _part_item_t {
 	uint16_t end_cylinder : 10;        // 结束磁道
 	uint32_t relative_sectors;	        // 相对于该驱动器开始的相对扇区数
 	uint32_t total_sectors;            // 总的扇区数
-}part_item_t;
+} part_item_t;
 
 #define MBR_PRIMARY_PART_NR	    4   // 4个分区表
 
+// Primary Bus即为一个通道，Secondary Bus即为另一个通道
+// 项目中使用Primary Bus通道，这个通道上又有两个磁盘插槽，能插上一个主磁盘设备和一个从磁盘设备。
+// 一个磁盘的结构：MBR + 主分区1(FAT16格式：obr/dbr + fat表1 + fat表2 + 根目录区 + 文件数据区) + ...
+// obr = 跳转指令(3B) + BIOS Parameter Block + FAT配置数据区 + 引导代码 + 结束标记或者启动标记0x55和0xaa(2B)
 /**
- * MBR区域描述结构
+ * MBR区域描述结构，MBR引导扇区的内容
+ * (1)446字节的引导程序及参数；
+ * (2)64字节的4个分区表；
+ * (3)2字节的结束标志0x55和0xaa。
  */
 typedef  struct _mbr_t {
 	uint8_t code[446];                 // 引导代码区
     part_item_t part_item[MBR_PRIMARY_PART_NR];
 	uint8_t boot_sig[2];               // 引导标志
-}mbr_t;
+} mbr_t;
 
 #pragma pack()
 
@@ -75,7 +83,7 @@ struct _disk_t;
  * @brief 分区类型
  */
 typedef struct _partinfo_t {
-    char name[PART_NAME_SIZE]; // 分区名称
+    char name[PART_NAME_SIZE]; // 分区名称，比如：sda0/sda1/sda2/sdb1
     struct _disk_t * disk;      // 所属的磁盘
 
     // https://www.win.tue.nl/~aeb/partitions/partition_types-1.html
@@ -83,14 +91,15 @@ typedef struct _partinfo_t {
         FS_INVALID = 0x00,      // 无效文件系统类型
         FS_FAT16_0 = 0x06,      // FAT16文件系统类型
         FS_FAT16_1 = 0x0E,
+        // 0x06用于表示主分区中的FAT16文件系统，而0x0E用于表示逻辑分区中的FAT16文件系统
     } type;
-
-	int start_sector;           // 起始扇区
-	int total_sector;           // 总扇区
+    // 一个磁盘可以有多个分区
+	int start_sector;           // 起始扇区: 分区的起始扇区
+	int total_sector;           // 总扇区: 分区有多少个扇区
 } partinfo_t;
 
 /**
- * @brief 磁盘结构
+ * @brief 磁盘结构: 描述一个具体的磁盘
  */
 typedef struct _disk_t {
     char name[DISK_NAME_SIZE];      // 磁盘名称: sda/sdb
@@ -98,14 +107,16 @@ typedef struct _disk_t {
     enum {
         DISK_DISK_MASTER = (0 << 4),     // 主设备
         DISK_DISK_SLAVE = (1 << 4),      // 从设备
-    } drive;
+    } drive;  // 驱动号，IO端口第4位
 
-    uint16_t port_base;             // IO 端口起始地址 0x1F0 ~ 0x1F7
+    uint16_t port_base;             // 其PrimaryBus的IO端口起始地址 0x1F0 ~ 0x1F7
     int sector_size;                // 块大小,扇区大小
     int sector_count;               // 总扇区数量
 
-    // 一个磁盘可以被划分为多个分区
-	partinfo_t partinfo[DISK_PRIMARY_PART_CNT];	// 分区表, 包含一个描述整个磁盘的假分区信息
+    // 一个磁盘可以被划分为多个分区，这里不考虑扩展分区，因此最多划分成4个主分区
+    // 这里将第0个分区将4个分区看作一个大的分区，然后依此4个分区
+    // 分区表, 包含一个描述整个磁盘的假分区信息
+	partinfo_t partinfo[DISK_PRIMARY_PART_CNT];	
 
     mutex_t * mutex;              // 访问该通知的互斥信号量
     sem_t * op_sem;               // 读写命令操作的同步信号量
