@@ -186,14 +186,14 @@ static int do_less (int argc, char ** argv) {
  */
 static int do_ls (int argc, char ** argv) {
     // 打开目录
-	DIR * p_dir = opendir("temp");
+	DIR * p_dir = opendir("temp");  // "temp"是随便填入的值，后面并不会用到，课程只支持对磁盘顶层目录/home的遍历
 	if (p_dir == NULL) {
 		printf("open dir failed\n");
 		return -1;
 	}
 
     // 然后进行遍历
-	struct dirent * entry;
+	struct dirent * entry;   // 保存着目录文件当前遍历位置和目录项
 	while((entry = readdir(p_dir)) != NULL) {
         strlwr(entry->name);
 		printf("%c %s %d\n",
@@ -205,6 +205,7 @@ static int do_ls (int argc, char ** argv) {
 
     return 0;
 }
+
 
 /**
  * @brief 复制文件命令

@@ -61,7 +61,10 @@ int fork() {
     return sys_call(&args);
 }
 
-
+/* name : ELF格式可执行程序的绝对路径
+ * argv : 参数
+ * env  : 环境变量
+ */
 int execve(const char *name, char * const *argv, char * const *env) {
     syscall_args_t args;
     args.id = SYS_execve;

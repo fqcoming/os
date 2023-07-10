@@ -11,7 +11,9 @@ set(LIBS_FLAGS "-L ${CMAKE_BINARY_DIR}/source/applib/ -lapp -L ${CMAKE_BINARY_DI
 
 
 
-
+# -m elf_i386 表示生成elf_i386格式的elf文件，生成的可执行文件适用于32位x86架构。
+# -T ${PROJECT_SOURCE_DIR}/link.lds 指定链接文件，该脚本定义了链接器如何组织和布局可执行文件的各个部分。
+# ${LIBS_FLAGS} 包含其他的库标志，可能是其他变量或具体的标志选项。${LIBS_FLAGS}在上面定义过
 set(CMAKE_EXE_LINKER_FLAGS "-m elf_i386 -T ${PROJECT_SOURCE_DIR}/link.lds ${LIBS_FLAGS}")
 set(CMAKE_C_LINK_EXECUTABLE "${LINKER_TOOL} <OBJECTS> ${CMAKE_EXE_LINKER_FLAGS} -o ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.elf")
 

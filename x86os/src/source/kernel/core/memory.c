@@ -184,19 +184,25 @@ void create_kernel_table (void) {
 /**
  * @brief 创建进程的初始页表
  * 主要的工作创建页目录表，然后从内核页表中复制一部分
+ * return : 返回新创建的页目录表起始地址
  */
 uint32_t memory_create_uvm (void) {
+
+    // 从物理页中分配1个页的内存用于存放页目录表，paddr_alloc管理物理页的结构体，1表示分配页数
     pde_t * page_dir = (pde_t *)addr_alloc_page(&paddr_alloc, 1);
     if (page_dir == 0) {
         return 0;
     }
+    // 将新分配的页目录表置0
     kernel_memset((void *)page_dir, 0, MEM_PAGE_SIZE);
 
     // 复制整个内核空间的页目录项，以便与其它进程共享内核空间
     // 用户空间的内存映射暂不处理，等加载程序时创建
-    uint32_t user_pde_start = pde_index(MEMORY_TASK_BASE);
+    uint32_t user_pde_start = pde_index(MEMORY_TASK_BASE);  // 计算虚拟地址0x80000000在页目录中目录项所在下标
+
+    // 将0x00000000 ~ 0x7FFFFFFF所在的页目录表项设置为内核空间页目录项内容
     for (int i = 0; i < user_pde_start; i++) {
-        page_dir[i].v = kernel_page_dir[i].v;
+        page_dir[i].v = kernel_page_dir[i].v;  // v成员表示4B即整个页目录项
     }
 
     return (uint32_t)page_dir;

@@ -27,10 +27,10 @@
  */
 
 typedef struct _diritem_t {
-    uint8_t DIR_Name[11];                   // 文件名
-    uint8_t DIR_Attr;                      // 属性
-    uint8_t DIR_NTRes;
-    uint8_t DIR_CrtTimeTeenth;             // 创建时间的毫秒
+    uint8_t  DIR_Name[11];        // 文件名
+    uint8_t  DIR_Attr;            // 属性
+    uint8_t  DIR_NTRes;
+    uint8_t  DIR_CrtTimeTeenth;   // 创建时间的毫秒
     uint16_t DIR_CrtTime;         // 创建时间
     uint16_t DIR_CrtDate;         // 创建日期
     uint16_t DIR_LastAccDate;     // 最后访问日期

@@ -22,6 +22,7 @@ typedef uint32_t Elf32_Word;
 
 #define PT_LOAD         1   // 可加载类型
 
+// 32位elf文件头
 typedef struct {
     char e_ident[EI_NIDENT];
     Elf32_Half e_type;
@@ -41,6 +42,7 @@ typedef struct {
 
 #define PT_LOAD         1
 
+// 表示程序头表，也就是段头表
 typedef struct {
     Elf32_Word p_type;
     Elf32_Off p_offset;

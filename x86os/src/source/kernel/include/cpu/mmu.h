@@ -60,6 +60,8 @@ typedef union _pte_t {
 
 /**
  * @brief 返回vaddr在页目录中的索引
+ * param1 vaddr: 表示虚拟内存地址
+ * return : 返回虚拟内存地址在页目录表中的索引下标
  */
 static inline uint32_t pde_index (uint32_t vaddr) {
     int index = (vaddr >> 22); // 只取高10位

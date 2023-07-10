@@ -45,7 +45,7 @@ struct dirent {
 
 typedef struct _DIR {
     int index;               // 当前遍历的索引
-    struct dirent dirent;
+    struct dirent dirent;    // 目录文件中的目录项
 } DIR;
 
 

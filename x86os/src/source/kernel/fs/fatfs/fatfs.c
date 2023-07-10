@@ -756,7 +756,7 @@ int fatfs_stat (file_t * file, struct stat *st) {
 /**
  * @brief 打开目录。只是简单地读取位置重设为0
  */
-int fatfs_opendir (struct _fs_t * fs,const char * name, DIR * dir) {
+int fatfs_opendir (struct _fs_t * fs, const char * name, DIR * dir) {
     dir->index = 0;
     return 0;
 }

@@ -635,6 +635,10 @@ static int load_phdr(int file, Elf32_Phdr * phdr, uint32_t page_dir) {
 
 /**
  * @brief 加载elf文件到内存中
+ * param1 task: 要重新加载ELF格式文件的任务
+ * param2 name: ELF格式文件的绝对路径
+ * param3 page_dir: 进程新分配的页目录表，即将ELF格式应用程序加载到的目标页目录表
+ * return: 返回程序执行的入口地址
  */
 static uint32_t load_elf_file (task_t * task, const char * name, uint32_t page_dir) {
     Elf32_Ehdr elf_hdr;
@@ -767,11 +771,12 @@ int sys_execve(char *name, char **argv, char **env) {
     task_t * task = task_current();
 
     // 后面会切换页表，所以先处理需要从进程空间取数据的情况
+    // 将ELF格式文件的文件名作为新进程的进程名，替换掉原进程名，比如传入name = "shell.elf"
     kernel_strncpy(task->name, get_file_name(name), TASK_NAME_SIZE);
 
     // 现在开始加载了，先准备应用页表，由于所有操作均在内核区中进行，所以可以直接先切换到新页表
     uint32_t old_page_dir = task->tss.cr3;
-    uint32_t new_page_dir = memory_create_uvm();
+    uint32_t new_page_dir = memory_create_uvm();  // 创建一个新的页目录表，返回页目录表在物理内存中的起始地址，其前0x80000000和内核页目录表内容一致
     if (!new_page_dir) {
         goto exec_failed;
     }
@@ -813,7 +818,7 @@ int sys_execve(char *name, char **argv, char **env) {
     frame->esp = stack_top - sizeof(uint32_t)*SYSCALL_PARAM_COUNT;
 
     // 切换到新的页表
-    task->tss.cr3 = new_page_dir;
+    task->tss.cr3 = new_page_dir;   // 仅仅修改task结构体中页目录表起始地址
     mmu_set_page_dir(new_page_dir);   // 切换至新的页表。由于不用访问原栈及数据，所以并无问题
 
     // 调整页表，切换成新的，同时释放掉之前的
