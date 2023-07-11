@@ -120,6 +120,7 @@ pte_t * find_pte (pde_t * page_dir, uint32_t vaddr, int alloc) {
 
 /**
  * @brief 将指定的地址空间进行一页的映射
+ * 
  */
 int memory_create_map (pde_t * page_dir, uint32_t vaddr, uint32_t paddr, int count, uint32_t perm) {
     for (int i = 0; i < count; i++) {
@@ -337,6 +338,15 @@ int memory_copy_uvm_data(uint32_t to, uint32_t page_dir, uint32_t from, uint32_t
   return 0;
 }
 
+
+/**
+ * @brief 为
+ * param1 page_dir: 进程新分配的页目录表，即将ELF格式应用程序加载到的目标页目录表
+ * param2 vaddr: 用来指明本段在内存中的起始虚拟地址
+ * param3 size: 用来指明本段在内存中的大小
+ * param4 perm: 段权限设置,比如 PTE_P | PTE_U | PTE_W
+ * return: 
+ */
 uint32_t memory_alloc_for_page_dir (uint32_t page_dir, uint32_t vaddr, uint32_t size, int perm) {
     uint32_t curr_vaddr = vaddr;
     int page_count = up2(size, MEM_PAGE_SIZE) / MEM_PAGE_SIZE;
@@ -345,7 +355,7 @@ uint32_t memory_alloc_for_page_dir (uint32_t page_dir, uint32_t vaddr, uint32_t 
     // 逐页分配内存，然后建立映射关系
     for (int i = 0; i < page_count; i++) {
         // 分配需要的内存
-        uint32_t paddr = addr_alloc_page(&paddr_alloc, 1);
+        uint32_t paddr = addr_alloc_page(&paddr_alloc, 1); // 从物理内存中分配1页内存，返回物理内存地址
         if (paddr == 0) {
             log_printf("mem alloc failed. no memory");
             return 0;

@@ -526,6 +526,7 @@ static void copy_opened_files(task_t * child_task) {
 
 /**
  * @brief 创建进程的副本
+ * 
  */
 int sys_fork (void) {
     task_t * parent_task = task_current();
@@ -588,6 +589,10 @@ fork_failed:
 
 /**
  * @brief 加载一个程序表头的数据到内存中
+ * param1 file: 已打开的ELF可执行文件fd
+ * param2 phdr: 程序头表项结构体
+ * param3 page_dir: 进程新分配的页目录表，即将ELF格式应用程序加载到的目标页目录表
+ * return: 
  */
 static int load_phdr(int file, Elf32_Phdr * phdr, uint32_t page_dir) {
     // 生成的ELF文件要求是页边界对齐的
@@ -638,11 +643,11 @@ static int load_phdr(int file, Elf32_Phdr * phdr, uint32_t page_dir) {
  * param1 task: 要重新加载ELF格式文件的任务
  * param2 name: ELF格式文件的绝对路径
  * param3 page_dir: 进程新分配的页目录表，即将ELF格式应用程序加载到的目标页目录表
- * return: 返回程序执行的入口地址
+ * return: 返回程序执行的入口地址，虚拟入口地址
  */
 static uint32_t load_elf_file (task_t * task, const char * name, uint32_t page_dir) {
-    Elf32_Ehdr elf_hdr;
-    Elf32_Phdr elf_phdr;
+    Elf32_Ehdr elf_hdr;   // ELF header
+    Elf32_Phdr elf_phdr;  // Program header
 
     // 以只读方式打开
     int file = sys_open(name, 0);   // todo: flags暂时用0替代
@@ -787,9 +792,9 @@ int sys_execve(char *name, char **argv, char **env) {
         goto exec_failed;
     }
 
-    // 准备用户栈空间，预留环境环境及参数的空间
+    // 准备用户栈空间，预留环境及参数的空间
     uint32_t stack_top = MEM_TASK_STACK_TOP - MEM_TASK_ARG_SIZE;    // 预留一部分参数空间
-    int err = memory_alloc_for_page_dir(new_page_dir,
+    int err = memory_alloc_for_page_dir(new_page_dir,   // 为栈空间分配物理内存
                             MEM_TASK_STACK_TOP - MEM_TASK_STACK_SIZE,
                             MEM_TASK_STACK_SIZE, PTE_P | PTE_U | PTE_W);
     if (err < 0) {
