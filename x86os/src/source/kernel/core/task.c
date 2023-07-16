@@ -453,7 +453,7 @@ void task_time_tick (void) {
         curr = next;
     }
 
-    task_dispatch();
+    task_dispatch();  // ??? 进程切换之后应该是不会回来执行下面一行了，但是没有关闭中断保护会影响操作系统其他进程运行吗?
     irq_leave_protection(state);
 }
 
@@ -874,9 +874,9 @@ int sys_wait(int* status) {
 
                 *status = task->status;
 
-                memory_destroy_uvm(task->tss.cr3);
-                memory_free_page(task->tss.esp0 - MEM_PAGE_SIZE);
-                kernel_memset(task, 0, sizeof(task_t));
+                memory_destroy_uvm(task->tss.cr3);  // 释放页目录表和页表内存以及对应物理内存
+                memory_free_page(task->tss.esp0 - MEM_PAGE_SIZE);  // 释放栈
+                kernel_memset(task, 0, sizeof(task_t));  // 将任务结构归还
 
                 mutex_unlock(&task_table_mutex);
                 return pid;
@@ -912,7 +912,7 @@ void sys_exit(int status) {
 
     // 找所有的子进程，将其转交给init进程
     mutex_lock(&task_table_mutex);
-    for (int i = 0; i < TASK_OFILE_NR; i++) {
+    for (int i = 0; i < TASK_NR; i++) {
         task_t * task = task_table + i;
         if (task->parent == curr_task) {
             // 有子进程，则转给init_task
@@ -929,7 +929,7 @@ void sys_exit(int status) {
 
     irq_state_t state = irq_enter_protection();
 
-    // 如果有移动子进程，则唤醒init进程
+    // 如果有僵尸子进程，则唤醒init进程回收僵尸子进程
     task_t * parent = curr_task->parent;
     if (move_child && (parent != &task_manager.first_task)) {  // 如果父进程为init进程，在下方唤醒
         if (task_manager.first_task.state == TASK_WAITING) {
@@ -944,9 +944,9 @@ void sys_exit(int status) {
     }
 
     // 保存返回值，进入僵尸状态
-    curr_task->status = status;
-    curr_task->state = TASK_ZOMBIE;
-    task_set_block(curr_task);
+    curr_task->status = status;   // 保存进程退出的原因
+    curr_task->state = TASK_ZOMBIE;  // 设置为僵尸状态，由其父进程回收
+    task_set_block(curr_task);  
     task_dispatch();
 
     irq_leave_protection(state);
